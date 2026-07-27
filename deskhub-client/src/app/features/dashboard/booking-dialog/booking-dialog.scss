@@ -1,0 +1,48 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 320px;
+  padding-top: 0.5rem;
+}
+
+.space-summary {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+
+  .space-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1f2430;
+  }
+
+  .space-meta {
+    font-size: 0.8rem;
+    color: #8a8f9a;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.time-row {
+  display: flex;
+  gap: 1rem;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+}
+
+.confirm-button {
+  background-color: #1f2430 !important;
+  color: #ffffff !important;
+}

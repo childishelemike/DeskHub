@@ -1,0 +1,27 @@
+## ===== .NET / Backend =====
+DeskHub.Api/bin/
+DeskHub.Api/obj/
+DeskHub.Api/*.user
+DeskHub.Api/appsettings.Development.json
+
+## ===== Angular / Frontend =====
+deskhub-client/node_modules/
+deskhub-client/dist/
+deskhub-client/.angular/
+deskhub-client/*.log
+
+## ===== Editor / OS =====
+.vscode/
+.vs/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+## ===== Logs =====
+*.log
+npm-debug.log*
+
+## ===== Environment / Secrets =====
+*.env
+.env.local

@@ -1,0 +1,85 @@
+.admin-toolbar {
+  background: #1f2430 !important;
+  color: #ffffff !important;
+  padding: 0 1rem;
+  gap: 0.5rem;
+
+  .toolbar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .spacer { flex: 1 1 auto; }
+
+  .filter-select {
+    width: 160px;
+    margin-bottom: -1.25rem;
+
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background: #ffffff;
+      border-radius: 8px;
+    }
+  }
+}
+
+.admin-content {
+  padding: 1.5rem;
+  background: #f4f5f7;
+  min-height: calc(100vh - 64px);
+}
+
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 0;
+  color: #8a8f9a;
+
+  mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.4;
+  }
+}
+
+.table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(20, 20, 40, 0.05);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+
+  .status-chip {
+    font-size: 0.72rem !important;
+    min-height: 22px !important;
+
+    &.confirmed {
+      background: #e8f5e9 !important;
+      color: #2e7d32 !important;
+    }
+
+    &.cancelled {
+      background: #fdecea !important;
+      color: #d32f2f !important;
+    }
+
+    &.completed {
+      background: #e8eaf6 !important;
+      color: #3f51b5 !important;
+    }
+  }
+
+  .cancel-btn {
+    color: #d32f2f;
+  }
+}

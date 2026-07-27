@@ -1,0 +1,193 @@
+<div class="app-shell">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <mat-icon>business_center</mat-icon>
+      </div>
+      <span class="brand-name">DeskHub</span>
+    </div>
+
+    <nav class="nav-section">
+      <span class="nav-label">General</span>
+      <a class="nav-item active">
+        <mat-icon>grid_view</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" (click)="goToFloorplan()">
+        <mat-icon>event_seat</mat-icon>
+        <span>Plano interactivo</span>
+      </a>
+    </nav>
+
+    @if (isAdminOrManager()) {
+      <nav class="nav-section">
+        <span class="nav-label">Administración</span>
+        <a class="nav-item" (click)="goToOffices()">
+          <mat-icon>apartment</mat-icon>
+          <span>Oficinas</span>
+        </a>
+        <a class="nav-item" (click)="goToSpaces()">
+          <mat-icon>chair</mat-icon>
+          <span>Espacios</span>
+        </a>
+        <a class="nav-item" (click)="goToUsers()">
+          <mat-icon>group</mat-icon>
+          <span>Usuarios</span>
+        </a>
+        <a class="nav-item" (click)="goToBookings()">
+          <mat-icon>event_note</mat-icon>
+          <span>Reservas</span>
+        </a>
+      </nav>
+    }
+
+    @if (currentUser(); as user) {
+      <div class="sidebar-user">
+        <div class="user-avatar">{{ initialsOf(user.fullName) }}</div>
+        <div class="user-info">
+          <span class="user-name">{{ user.fullName }}</span>
+          <span class="user-role">{{ user.roleName }} · {{ user.companyName }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="sidebar-footer">
+      <a class="nav-item logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENIDO ===== -->
+  <div class="main-area">
+
+    <header class="topbar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          placeholder="Buscar un espacio..."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="onSearchChange($event)"
+        >
+      </mat-form-field>
+      <span class="spacer"></span>
+    </header>
+
+    <main class="main-content">
+      @if (loading()) {
+        <div class="loading-state">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Cargando tu espacio de trabajo...</p>
+        </div>
+      } @else {
+
+        <!-- Hero -->
+        <section class="hero-banner">
+          <div class="hero-text">
+            <span class="hero-eyebrow">DESKHUB · RESERVAS</span>
+            <h1>Encuentra y reserva tu espacio de trabajo ideal</h1>
+            <button mat-flat-button class="hero-cta" (click)="goToFloorplan()">
+              Reservar ahora <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+          <div class="hero-decoration">
+            <mat-icon>event_seat</mat-icon>
+          </div>
+        </section>
+
+        <!-- Resumen -->
+        <section class="summary-row">
+          <div class="summary-pill">
+            <div class="summary-icon-circle"><mat-icon>apartment</mat-icon></div>
+            <div class="summary-text">
+              <span class="summary-number">{{ offices().length }}</span>
+              <span class="summary-label">Oficinas</span>
+            </div>
+          </div>
+          <div class="summary-pill">
+            <div class="summary-icon-circle"><mat-icon>chair</mat-icon></div>
+            <div class="summary-text">
+              <span class="summary-number">{{ spaces().length }}</span>
+              <span class="summary-label">Espacios activos</span>
+            </div>
+          </div>
+          <div class="summary-pill">
+            <div class="summary-icon-circle"><mat-icon>event_available</mat-icon></div>
+            <div class="summary-text">
+              <span class="summary-number">{{ upcomingBookings().length }}</span>
+              <span class="summary-label">Próximas reservas</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Espacios disponibles -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Espacios disponibles</h2>
+          </div>
+
+          @if (availableSpaces().length === 0) {
+            <p class="empty-state">No se encontraron espacios con ese criterio.</p>
+          } @else {
+            <div class="space-carousel">
+              @for (space of availableSpaces(); track space.id) {
+                <div class="space-card">
+                  <div class="space-card-icon">
+                    <mat-icon>{{ space.spaceTypeName === 'Sala de reuniones' ? 'groups' : 'desk' }}</mat-icon>
+                  </div>
+                  <span class="space-card-type">{{ space.spaceTypeName }}</span>
+                  <span class="space-card-name">{{ space.name }}</span>
+                  <span class="space-card-meta">{{ space.officeName }} · {{ space.capacity }} pers.</span>
+                  <button mat-stroked-button class="space-card-btn" (click)="openBookingDialog(space)">
+                    Reservar
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </section>
+
+        <!-- Mis próximas reservas -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Mis próximas reservas</h2>
+          </div>
+
+          @if (upcomingBookings().length === 0) {
+            <p class="empty-state">No tienes reservas próximas.</p>
+          } @else {
+            <div class="table-card">
+              <table class="bookings-table">
+                <thead>
+                  <tr>
+                    <th>Espacio</th>
+                    <th>Oficina</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (booking of upcomingBookings(); track booking.id) {
+                    <tr>
+                      <td>{{ booking.spaceName }}</td>
+                      <td>{{ booking.officeName }}</td>
+                      <td>{{ formatDateTime(booking.startTime) }}</td>
+                      <td>
+                        <mat-chip class="status-chip">{{ booking.status }}</mat-chip>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </section>
+
+      }
+    </main>
+  </div>
+</div>

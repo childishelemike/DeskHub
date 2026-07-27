@@ -1,0 +1,194 @@
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #f4f5f7;
+}
+
+// ===== PANEL IZQUIERDO: FORMULARIO =====
+.login-card-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f4f5f7;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1f2430;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #1f2430;
+  }
+
+  .brand-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: #8a8f9a;
+  }
+}
+
+.login-form {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 24px rgba(20, 20, 40, 0.06);
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem 0;
+    color: #1f2430;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    color: #8a8f9a;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .field-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #4a4f5c;
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .password-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+
+    .field-label {
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  .forgot-link {
+    font-size: 0.8rem;
+    color: #4a4f5c;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      color: #1f2430;
+    }
+  }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.8rem;
+    margin: -0.5rem 0 0.5rem 0;
+  }
+
+  .submit-button {
+    margin-top: 0.75rem;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #1f2430 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+}
+
+.signup-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #8a8f9a;
+  margin: 0;
+
+  a {
+    color: #1f2430;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+// ===== PANEL DERECHO: IMAGEN =====
+.login-image-panel {
+  flex: 1.1;
+  position: relative;
+  overflow: hidden;
+  display: none;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20, 20, 40, 0) 0%, rgba(20, 20, 40, 0.15) 100%);
+  }
+}
+
+// Mostrar el panel de imagen solo en pantallas medianas/grandes
+@media (min-width: 900px) {
+  .login-image-panel {
+    display: block;
+  }
+}
+
+// Ajustes de Angular Material para que combine con el diseño
+::ng-deep {
+  .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 10px;
+    }
+  }
+
+  .mat-mdc-form-field-outline {
+    border-radius: 10px;
+  }
+}

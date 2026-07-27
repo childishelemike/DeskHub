@@ -1,0 +1,32 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 380px;
+  padding-top: 0.5rem;
+}
+
+.loading-options {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.toggle-row {
+  margin: 0.5rem 0 1rem;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: -0.25rem;
+}
+
+.save-button {
+  background-color: #1f2430 !important;
+  color: #ffffff !important;
+}

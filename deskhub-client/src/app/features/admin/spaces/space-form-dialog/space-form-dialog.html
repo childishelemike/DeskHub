@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar espacio' : 'Nuevo espacio' }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  @if (loadingOptions()) {
+    <div class="loading-options">
+      <mat-spinner diameter="28"></mat-spinner>
+    </div>
+  } @else {
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="name" placeholder="Escritorio A-1">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Oficina</mat-label>
+      <mat-select [(ngModel)]="officeId">
+        @for (office of offices(); track office.id) {
+          <mat-option [value]="office.id">{{ office.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo de espacio</mat-label>
+      <mat-select [(ngModel)]="spaceTypeId">
+        @for (type of spaceTypes(); track type.id) {
+          <mat-option [value]="type.id">{{ type.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Capacidad (personas)</mat-label>
+      <input matInput type="number" min="1" [(ngModel)]="capacity">
+    </mat-form-field>
+
+    <div class="toggle-row">
+      <mat-slide-toggle [(ngModel)]="isActive">Espacio activo</mat-slide-toggle>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="error-message">{{ errorMessage() }}</p>
+    }
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Cancelar</button>
+  <button mat-flat-button type="button" class="save-button" [disabled]="saving() || loadingOptions()" (click)="save()">
+    @if (saving()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      Guardar
+    }
+  </button>
+</mat-dialog-actions>

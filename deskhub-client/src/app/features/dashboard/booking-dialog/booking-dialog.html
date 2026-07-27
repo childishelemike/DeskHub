@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Reservar espacio</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="space-summary">
+    <span class="space-name">{{ data.space.name }}</span>
+    <span class="space-meta">{{ data.space.officeName }} · {{ data.space.spaceTypeName }}</span>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="date" [min]="today" readonly (click)="picker.open()">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div class="time-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Hora inicio</mat-label>
+      <input matInput type="time" [(ngModel)]="startHour">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hora fin</mat-label>
+      <input matInput type="time" [(ngModel)]="endHour">
+    </mat-form-field>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Cancelar</button>
+  <button mat-flat-button type="button" class="confirm-button" [disabled]="loading()" (click)="confirm()">
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      Confirmar reserva
+    }
+  </button>
+</mat-dialog-actions>

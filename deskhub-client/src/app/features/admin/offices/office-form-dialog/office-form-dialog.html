@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar oficina' : 'Nueva oficina' }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="name" placeholder="Acme HQ">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Dirección</mat-label>
+    <input matInput [(ngModel)]="address" placeholder="Calle 100 # 20-30">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Ciudad</mat-label>
+    <input matInput [(ngModel)]="city" placeholder="Bogotá">
+  </mat-form-field>
+
+  <div class="time-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Hora de apertura</mat-label>
+      <input matInput type="time" [(ngModel)]="openingTime">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hora de cierre</mat-label>
+      <input matInput type="time" [(ngModel)]="closingTime">
+    </mat-form-field>
+  </div>
+
+  <div class="days-section">
+    <span class="days-label">Días laborales</span>
+    <div class="days-grid">
+      @for (day of dayOptions; track day.value) {
+        <mat-checkbox
+          [checked]="isDaySelected(day.value)"
+          (change)="toggleDay(day.value)"
+        >{{ day.label }}</mat-checkbox>
+      }
+    </div>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="close()">Cancelar</button>
+  <button mat-flat-button type="button" class="save-button" [disabled]="loading()" (click)="save()">
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      Guardar
+    }
+  </button>
+</mat-dialog-actions>

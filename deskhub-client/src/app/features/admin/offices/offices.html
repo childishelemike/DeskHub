@@ -1,0 +1,81 @@
+<mat-toolbar class="admin-toolbar">
+  <button mat-icon-button (click)="goToDashboard()" aria-label="Volver">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="toolbar-title">
+    <mat-icon>apartment</mat-icon>
+    <span>Gestión de oficinas</span>
+  </div>
+  <span class="spacer"></span>
+  <button mat-flat-button class="new-button" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    Nueva oficina
+  </button>
+</mat-toolbar>
+
+<div class="admin-content">
+  @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando oficinas...</p>
+    </div>
+  } @else if (offices().length === 0) {
+    <div class="empty-state">
+      <mat-icon>apartment</mat-icon>
+      <p>Aún no hay oficinas registradas.</p>
+      <button mat-flat-button class="new-button" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Crear la primera oficina
+      </button>
+    </div>
+  } @else {
+    <div class="table-card">
+      <table mat-table [dataSource]="offices()" class="offices-table">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Oficina</th>
+          <td mat-cell *matCellDef="let office">
+            <div class="office-name-cell">
+              <span class="office-name">{{ office.name }}</span>
+              <span class="office-address">{{ office.address }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+          <td mat-cell *matCellDef="let office">{{ office.city }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hours">
+          <th mat-header-cell *matHeaderCellDef>Horario</th>
+          <td mat-cell *matCellDef="let office">
+            {{ formatTime(office.openingTime) }} - {{ formatTime(office.closingTime) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="days">
+          <th mat-header-cell *matHeaderCellDef>Días laborales</th>
+          <td mat-cell *matCellDef="let office">
+            <mat-chip class="days-chip">{{ formatDays(office.workingDays) }}</mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let office">
+            <button mat-icon-button (click)="openEditDialog(office)" aria-label="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteOffice(office)" aria-label="Eliminar" class="delete-btn">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  }
+</div>

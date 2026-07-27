@@ -1,0 +1,74 @@
+.admin-toolbar {
+  background: #1f2430 !important;
+  color: #ffffff !important;
+  padding: 0 1rem;
+  gap: 0.5rem;
+
+  .toolbar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .spacer { flex: 1 1 auto; }
+
+  .new-button {
+    background-color: #ffffff !important;
+    color: #1f2430 !important;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+}
+
+.admin-content {
+  padding: 1.5rem;
+  background: #f4f5f7;
+  min-height: calc(100vh - 64px);
+}
+
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 0;
+  color: #8a8f9a;
+
+  mat-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.4;
+  }
+}
+
+.table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(20, 20, 40, 0.05);
+  overflow: hidden;
+}
+
+.spaces-table {
+  width: 100%;
+
+  .status-chip {
+    background: #e8f5e9 !important;
+    color: #2e7d32 !important;
+    font-size: 0.72rem !important;
+    min-height: 22px !important;
+
+    &.inactive {
+      background: #f0f1f3 !important;
+      color: #757575 !important;
+    }
+  }
+
+  .delete-btn {
+    color: #d32f2f;
+  }
+}

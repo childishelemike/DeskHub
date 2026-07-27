@@ -1,0 +1,94 @@
+<div class="login-page">
+  <div class="login-card-panel">
+    <div class="login-card">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="8" width="7" height="13" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="14" y="3" width="7" height="18" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="5.5" y1="11" x2="5.5" y2="11.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="7.5" y1="11" x2="7.5" y2="11.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="5.5" y1="14" x2="5.5" y2="14.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="7.5" y1="14" x2="7.5" y2="14.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">DESKHUB</span>
+          <span class="brand-tagline">WORKSPACE BOOKING</span>
+        </div>
+      </div>
+
+      <form class="login-form" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <h1>Iniciar sesión</h1>
+        <p class="subtitle">Ingresa tus credenciales para continuar</p>
+
+        <label class="field-label" for="email">Correo electrónico</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input
+            matInput
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="tu@empresa.com"
+            required
+          />
+        </mat-form-field>
+
+        <div class="password-header">
+          <label class="field-label" for="password">Contraseña</label>
+          <a class="forgot-link" href="javascript:void(0)">¿Olvidaste tu contraseña?</a>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <input
+            matInput
+            id="password"
+            [type]="hidePassword() ? 'password' : 'text'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="••••••••••"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="'Mostrar contraseña'"
+          >
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        @if (errorMessage()) {
+          <p class="error-message">{{ errorMessage() }}</p>
+        }
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="submit-button"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <mat-spinner diameter="20" color="accent"></mat-spinner>
+          } @else {
+            Iniciar sesión
+          }
+        </button>
+      </form>
+
+      <p class="signup-hint">
+        ¿Aún no tienes cuenta? <a href="javascript:void(0)">Contacta a tu administrador</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="login-image-panel">
+    <img
+      src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
+      alt="Espacio de oficina moderno"
+    />
+    <div class="image-overlay"></div>
+  </div>
+</div>

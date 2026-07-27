@@ -1,0 +1,148 @@
+<mat-toolbar class="seatmap-toolbar">
+  <button mat-icon-button (click)="goToDashboard()" aria-label="Volver">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="toolbar-title">
+    <mat-icon>event_seat</mat-icon>
+    <span>Mapa de espacios</span>
+  </div>
+  <span class="spacer"></span>
+
+  @if (offices().length > 1) {
+    <mat-form-field appearance="outline" class="office-select">
+      <mat-select [value]="selectedOfficeId()" (selectionChange)="onOfficeChange($event.value)">
+        @for (office of offices(); track office.id) {
+          <mat-option [value]="office.id">{{ office.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+</mat-toolbar>
+
+<div class="seatmap-content">
+  @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando mapa de espacios...</p>
+    </div>
+  } @else {
+
+    <div class="seatmap-card">
+      <div class="seatmap-header">
+        <h1>
+          Selecciona tu puesto
+          <mat-icon
+            class="info-icon"
+            matTooltip="Los puestos verdes están disponibles. Haz clic para reservarlos."
+          >info</mat-icon>
+        </h1>
+        <p class="seatmap-subtitle">Haz clic en cualquier puesto disponible para reservarlo</p>
+        <div class="availability-pill">
+          <span class="pill-number">{{ totalAvailable() }}</span> de {{ totalSpaces() }} disponibles
+        </div>
+      </div>
+
+      @if (totalSpaces() === 0) {
+        <div class="empty-state">
+          <mat-icon>event_seat</mat-icon>
+          <p>Esta oficina aún no tiene espacios configurados.</p>
+        </div>
+      } @else {
+
+        <!-- ===== Salas de reuniones (cabina superior) ===== -->
+        @if (meetingRooms().length > 0) {
+          <div class="cabin-section">
+            @for (room of meetingRooms(); track room.id) {
+              <button
+                type="button"
+                class="meeting-chip"
+                [class]="room.status"
+                [disabled]="room.status !== 'available'"
+                [matTooltip]="seatTooltip(room)"
+                (click)="openBookingDialog(room)"
+              >
+                <mat-icon>groups</mat-icon>
+                <span>{{ room.name }}</span>
+              </button>
+            }
+            <div class="cabin-divider"></div>
+          </div>
+        }
+
+        <!-- ===== Grid de escritorios estilo aerolínea ===== -->
+        <div class="seatgrid-wrapper">
+          <button mat-icon-button class="nav-arrow left" (click)="scrollLeft()" aria-label="Desplazar izquierda">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <div class="seatgrid-scroll" #scrollContainer>
+            <div class="seatgrid">
+              <div class="column-headers">
+                <div class="row-letter-spacer"></div>
+                @for (col of columnNumbers(); track col) {
+                  <div class="column-number">{{ col }}</div>
+                }
+              </div>
+
+              @for (row of seatRows(); track row.letter) {
+                <div class="seat-row">
+                  <div class="row-letter">{{ row.letter }}</div>
+                  @for (cell of row.cells; track cell.col) {
+                    @if (cell.space) {
+                      <button
+                        type="button"
+                        class="seat"
+                        [class]="cell.space.status"
+                        [disabled]="cell.space.status !== 'available'"
+                        [matTooltip]="seatTooltip(cell.space)"
+                        matTooltipPosition="above"
+                        (click)="openBookingDialog(cell.space)"
+                      >
+                        <span class="seat-icon"></span>
+                        <span class="seat-initials">{{ cell.space.initials }}</span>
+                      </button>
+                    } @else {
+                      <div class="seat-placeholder"></div>
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <button mat-icon-button class="nav-arrow right" (click)="scrollRight()" aria-label="Desplazar derecha">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      }
+
+      <!-- ===== Leyenda ===== -->
+      <div class="legend-row">
+        <div class="legend-item">
+          <span class="legend-seat available"></span>
+          <span>Puesto disponible</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat reserved"></span>
+          <span>Reservado</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat occupied"></span>
+          <span>Ocupado ahora</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-seat inactive"></span>
+          <span>Inactivo</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-chip"></span>
+          <span>Sala de reuniones</span>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        La selección de puesto está sujeta a disponibilidad en tiempo real y puede cambiar si otro usuario reserva antes.
+      </p>
+    </div>
+  }
+</div>

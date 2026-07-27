@@ -1,0 +1,6 @@
+@DeskHub.Api_HostAddress = http://localhost:5290
+
+GET {{DeskHub.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
