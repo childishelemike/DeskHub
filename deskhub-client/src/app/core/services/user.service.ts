@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/dashboard.modules';
+import { environment } from '../../../environments/environment';
 
 export interface UserCreateRequest {
   fullName: string;
@@ -14,7 +15,7 @@ export interface UserCreateRequest {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private readonly apiUrl = 'https://localhost:7290/api/Users';
+  private readonly apiUrl = `${environment.apiUrl}/Users`;
 
   constructor(private http: HttpClient) {}
 

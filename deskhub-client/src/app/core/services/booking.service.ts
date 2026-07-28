@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Booking } from '../models/dashboard.modules';
+import { environment } from '../../../environments/environment';
 
 export interface BookingCreateRequest {
   userId: number;
@@ -12,7 +13,7 @@ export interface BookingCreateRequest {
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-  private readonly apiUrl = 'https://localhost:7290/api/Bookings';
+  private readonly apiUrl = `${environment.apiUrl}/Bookings`;
 
   constructor(private http: HttpClient) {}
 
@@ -25,6 +26,6 @@ export class BookingService {
   }
 
   cancel(id: number): Observable<void> {
-  return this.http.put<void>(`${this.apiUrl}/${id}/cancel`, {});
-}
+    return this.http.put<void>(`${this.apiUrl}/${id}/cancel`, {});
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Office } from '../models/dashboard.modules';
+import { environment } from '../../../environments/environment';
 
 export interface OfficeCreateRequest {
   name: string;
@@ -15,7 +16,7 @@ export interface OfficeCreateRequest {
 
 @Injectable({ providedIn: 'root' })
 export class OfficeService {
-  private readonly apiUrl = 'https://localhost:7290/api/Offices';
+  private readonly apiUrl = `${environment.apiUrl}/Offices`;
 
   constructor(private http: HttpClient) {}
 

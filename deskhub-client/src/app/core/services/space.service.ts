@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Space } from '../models/dashboard.modules';
+import { environment } from '../../../environments/environment';
 
 export interface SpaceCreateRequest {
   name: string;
@@ -15,7 +16,7 @@ export interface SpaceCreateRequest {
 
 @Injectable({ providedIn: 'root' })
 export class SpaceService {
-  private readonly apiUrl = 'https://localhost:7290/api/Spaces';
+  private readonly apiUrl = `${environment.apiUrl}/Spaces`;
 
   constructor(private http: HttpClient) {}
 

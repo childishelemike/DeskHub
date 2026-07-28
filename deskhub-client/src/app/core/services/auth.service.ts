@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse, LoginRequest } from '../models/auth.models';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly apiUrl = 'https://localhost:7290/api/Auth';
+  private readonly apiUrl = `${environment.apiUrl}/Auth`;
   private readonly tokenKey = 'deskhub_token';
   private readonly userKey = 'deskhub_user';
 
-  // Signal reactivo con el usuario actual (null si no hay sesión)
   currentUser = signal<AuthResponse | null>(this.loadUserFromStorage());
 
   constructor(private http: HttpClient, private router: Router) {}
