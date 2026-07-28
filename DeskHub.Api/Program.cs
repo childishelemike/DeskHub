@@ -31,15 +31,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // CORS - permitir que Angular consuma la API
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularApp", policy =>
+var allowedOrigins = builder.Configuration["AllowedOrigins"]?.Split(',')
+    ?? new[] { "http://localhost:4200" };
+
+    builder.Services.AddCors(options =>
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        options.AddPolicy("AllowAngularApp", policy =>
+        {
+            policy.WithOrigins(allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
     });
-});
 
 // Entity Framework Core - SQL Server
 builder.Services.AddDbContext<DeskHubDbContext>(options =>
@@ -72,15 +75,12 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "DeskHub API v1");
-        options.RoutePrefix = "swagger";
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "DeskHub API v1");
+    options.RoutePrefix = "swagger";
+});
 
 app.UseHttpsRedirection();
 
