@@ -37,6 +37,7 @@ public class RolesController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous] // ⚠️ TEMPORAL — quitar después de sembrar datos iniciales en producción
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<RoleDto>> CreateRole(RoleCreateDto dto)
     {
