@@ -8,7 +8,8 @@ Sistema **multi-tenant** de gestión y reserva de escritorios/espacios de oficin
 
 ## Demo en vivo
 
-> 🔗 _Próximamente — enlace al deploy_
+🔗 **Frontend**: https://desk-hub-beta.vercel.app
+🔗 **API (Swagger)**: https://deskhub-api-mike-d2c6and3drb4exgp.centralus-01.azurewebsites.net/swagger
 
 **Credenciales de prueba:**
 
